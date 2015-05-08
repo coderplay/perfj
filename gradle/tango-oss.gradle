@@ -1,0 +1,1 @@
+apply from: 'http://artifacts.tango.me/gradle-tango-local/artifactory.gradle'

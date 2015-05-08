@@ -1,0 +1,39 @@
+#
+# Warning!
+# Consider the effects on 'o.a.c.i.s.LegacySSTableTest' before changing schemas in this file.
+#
+cluster_name: Test Cluster
+memtable_offheap_space_in_mb: 1024
+memtable_allocation_type: offheap_buffers
+commitlog_sync: periodic
+commitlog_sync_period_in_ms: 10000
+commitlog_segment_size_in_mb: 32
+partitioner: org.apache.cassandra.dht.Murmur3Partitioner
+listen_address: 127.0.0.1
+storage_port: 7010
+rpc_port: 9170
+start_native_transport: true
+native_transport_port: 9042
+column_index_size_in_kb: 4
+commitlog_directory: build/test/cassandra/commitlog
+saved_caches_directory: build/test/cassandra/saved_caches
+data_file_directories:
+    - build/test/cassandra/data
+disk_access_mode: mmap
+seed_provider:
+    - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+      parameters:
+          - seeds: "127.0.0.1"
+endpoint_snitch: org.apache.cassandra.locator.SimpleSnitch
+dynamic_snitch: true
+request_scheduler: org.apache.cassandra.scheduler.RoundRobinScheduler
+request_scheduler_id: keyspace
+server_encryption_options:
+    internode_encryption: none
+    keystore: conf/.keystore
+    keystore_password: cassandra
+    truststore: conf/.truststore
+    truststore_password: cassandra
+incremental_backups: false
+concurrent_compactors: 4
+compaction_throughput_mb_per_sec: 0

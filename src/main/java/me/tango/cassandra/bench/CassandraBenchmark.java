@@ -403,9 +403,7 @@ public class CassandraBenchmark {
       byte[] key = formatNumber(random.nextInt(num));
       DecoratedKey rowKey = StorageService.getPartitioner().decorateKey(ByteBuffer.wrap(key));
       ColumnFamily cf = cfs.getColumnFamily(QueryFilter.getIdentityFilter(rowKey, "Standard1", 1));
-
       // int length = value.limit() -value.position();
-
       // Preconditions.checkNotNull(value, "db.get(%s) is null", new String(key, "utf-8"));
       // bytes += key.length + length;
       finishedSingleOp();

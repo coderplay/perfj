@@ -7,8 +7,10 @@ I just make it more convenient to use.
 
     gradle releaseTarGz
 or just run once
+
     gradle createWrapper
 afterwards run
+
     ./gradlew releaseTarGz
 
 ## Usage

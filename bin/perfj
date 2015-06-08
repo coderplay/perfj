@@ -92,7 +92,7 @@ if [ "$COMMAND" = "record" ] || [ "$COMMAND" = "trace" ] || [ "$COMMAND" = "top"
         exit 1
     fi
 
-    PERFJ_JAR=$(find "${PERFJ_HOME}" -name "perfj-*.jar")
+    PERFJ_JAR=$(find "${PERFJ_HOME}" -maxdepth 1 -name "perfj-*.jar")
 
     if [ -n "${PERFJ_JAR}" ]; then
         if [ "${JAVA_HOME}" != "" ]; then
@@ -103,7 +103,7 @@ if [ "$COMMAND" = "record" ] || [ "$COMMAND" = "trace" ] || [ "$COMMAND" = "top"
             exit 1
         fi
     else
-        echo "Please set PERFJ_HOME before running this script"
+        echo "Couldn't find perfj-*.jar in ${PERFJ_HOME}"
         exit 1
     fi
 fi

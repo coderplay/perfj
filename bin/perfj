@@ -98,6 +98,7 @@ if [ "$COMMAND" = "record" ] || [ "$COMMAND" = "trace" ] || [ "$COMMAND" = "top"
         if [ "${JAVA_HOME}" != "" ]; then
             TOOLS_JAR="${JAVA_HOME}/lib/tools.jar"
             ${JAVA_HOME}/bin/java -cp ${PERFJ_JAR}:${TOOLS_JAR} info.minzhou.perfj.PerfJ ${PID}
+            sudo chown root:root /tmp/perf-${PID}.map
         else
             echo "Please set JAVA_HOME before running this script"
             exit 1

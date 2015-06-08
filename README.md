@@ -17,7 +17,8 @@ afterwards run
 
 `PerfJ` is only work on jdk version with frame pointer enabled.
 
-    bin/perfj record -F 99 -g -p $pid
+    bin/perfj record -e cycles -F 99 -g -p $pid sleep 5
+    bin/perfj report --stdio
 
 ## License
 

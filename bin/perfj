@@ -1,0 +1,37 @@
+#! /bin/sh
+
+JAVA=$JAVA_HOME/bin/java
+
+if [ -z "$PERFJ_HOME" -o ! -d "$PERFJ_HOME" ] ; then
+  # resolve links - $0 could be a link to btrace's home
+  PRG="$0"
+  progname=`basename "$0"`
+  PERFJ_HOME=`dirname "$PRG"`/..
+  PERFJ_HOME=`cd "$PERFJ_HOME" && pwd`
+fi
+
+# some Java parameters
+if [ "$JAVA_HOME" != "" ]; then
+  #echo "run java in $JAVA_HOME"
+  JAVA_HOME=$JAVA_HOME
+fi
+
+if [ "$JAVA_HOME" = "" ]; then
+  echo "Error: JAVA_HOME is not set."
+  exit 1
+fi
+
+PERFJ_JAR=$(find "${PERFJ_HOME}" -name "perfj-*.jar")
+
+if [ -n "${PERFJ_JAR}" ]; then
+    if [ "${JAVA_HOME}" != "" ]; then
+       TOOLS_JAR="${JAVA_HOME}/lib/tools.jar"
+       ${JAVA_HOME}/bin/java -cp ${PERFJ_JAR}:${TOOLS_JAR} info.minzhou.perfj.PerfJ $*
+    else
+       echo "Please set JAVA_HOME before running this script"
+       exit 1
+    fi
+else
+    echo "Please set PERFJ_HOME before running this script"
+    exit 1
+fi

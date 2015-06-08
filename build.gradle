@@ -13,11 +13,9 @@ buildscript {
 }
 
 allprojects {
-  apply plugin: 'idea'
-  apply plugin: 'eclipse'
   repositories {
     mavenLocal()
-    mavenCentral() // maven { url: 'http://jcenter.bintray.com' }
+    mavenCentral()
   }
 }
 
@@ -29,11 +27,41 @@ apply from: file('gradle/maven.gradle')
 apply from: file('gradle/release.gradle')
 
 
+apply plugin: 'c'
+
+model {
+  platforms {
+    x86 {
+      architecture "x86"
+    }
+    x64 {
+      architecture "x86_64"
+    }
+  }
+
+  components {
+    perfj(NativeLibrarySpec) {
+      // targetPlatform "x86"
+      // targetPlatform "x64"
+      binaries.withType(SharedLibraryBinarySpec) {
+        if (targetPlatform.operatingSystem.linux) {
+          cCompiler.args '-I', "${org.gradle.internal.jvm.Jvm.current().javaHome}/include"
+          cCompiler.args '-I', "${org.gradle.internal.jvm.Jvm.current().javaHome}/include/linux"
+
+          sharedLibraryFile file("${buildDir}/classes/main/info/minzhou/perfj/native/libperfj.so")
+        }
+      }
+
+      binaries.withType(StaticLibraryBinarySpec) {
+        buildable false
+      }
+    }
+  }
+}
+
+jar.dependsOn 'perfjSharedLibrary'
 
 dependencies {
-  compile     'org.apache.cassandra:cassandra-all:2.1.4'
-  compile     'com.google.guava:guava:18.0'
-
-
+  provided files("${org.gradle.internal.jvm.Jvm.current().javaHome}/lib/tools.jar")
 }
 

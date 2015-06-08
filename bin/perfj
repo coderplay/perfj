@@ -1,37 +1,111 @@
-#! /bin/sh
+#!/usr/bin/env bash
 
-JAVA=$JAVA_HOME/bin/java
+
+function print_usage() {
+    echo "PerfJ is a wrapper of linux perf with enhancement for java programs"
+    echo "usage: perfj [--version] [--help] COMMAND [ARGS]"
+    echo "The most commonly used perf commands are:"
+    echo "  annotate        Read perf.data (created by perf record) and display annotated code"
+    echo "  archive         Create archive with object files with build-ids found in perf.data file"
+    echo "  bench           General framework for benchmark suites"
+    echo "  buildid-cache   Manage build-id cache."
+    echo "  buildid-list    List the buildids in a perf.data file"
+    echo "  diff            Read perf.data files and display the differential profile"
+    echo "  evlist          List the event names in a perf.data file"
+    echo "  inject          Filter to augment the events stream with additional information"
+    echo "  kmem            Tool to trace/measure kernel memory(slab) properties"
+    echo "  kvm             Tool to trace/measure kvm guest os"
+    echo "  list            List all symbolic event types"
+    echo "  lock            Analyze lock events"
+    echo "  mem             Profile memory accesses"
+    echo "  record          Run a command and record its profile into perf.data"
+    echo "  report          Read perf.data (created by perf record) and display the profile"
+    echo "  sched           Tool to trace/measure scheduler properties (latencies)"
+    echo "  script          Read perf.data (created by perf record) and display trace output"
+    echo "  stat            Run a command and gather performance counter statistics"
+    echo "  test            Runs sanity tests."
+    echo "  timechart       Tool to visualize total system behavior during a workload"
+    echo "  top             System profiling tool."
+    echo "  trace           strace inspired tool"
+    echo "  probe           Define new dynamic tracepoints"
+    echo ""
+    echo "See 'perf help COMMAND' for more information on a specific command."
+}
+
+
+if [ $# = 0 ]; then
+    print_usage
+    exit 1
+fi
 
 if [ -z "$PERFJ_HOME" -o ! -d "$PERFJ_HOME" ] ; then
-  # resolve links - $0 could be a link to btrace's home
-  PRG="$0"
-  progname=`basename "$0"`
-  PERFJ_HOME=`dirname "$PRG"`/..
-  PERFJ_HOME=`cd "$PERFJ_HOME" && pwd`
+    # resolve links - $0 could be a link to btrace's home
+    PRG="$0"
+    progname=`basename "$0"`
+    PERFJ_HOME=`dirname "$PRG"`/..
+    PERFJ_HOME=`cd "$PERFJ_HOME" && pwd`
+fi
+
+ARGS=$@
+PARAMS=$(getopt -q -o p:a -l "pid:,all-cpus" -n "$0" -- "$@");
+
+eval set -- "$PARAMS";
+
+while true; do
+    case "$1" in
+        -p|--pid)
+            shift;
+            if [ -n "$1" ]; then
+                PID=$1
+                shift;
+            fi
+            ;;
+        -a|--all-cpus)
+            echo "PerfJ so far doesn't support -a option";
+            exit 1
+            ;;
+        --)
+            shift;
+            break;
+            ;;
+    esac
+done
+
+
+if [ -z "${PID}" ]; then
+    echo "-p pid is required "
+    exit 1
 fi
 
 # some Java parameters
 if [ "$JAVA_HOME" != "" ]; then
-  #echo "run java in $JAVA_HOME"
-  JAVA_HOME=$JAVA_HOME
+    #echo "run java in $JAVA_HOME"
+    JAVA_HOME=$JAVA_HOME
 fi
 
 if [ "$JAVA_HOME" = "" ]; then
-  echo "Error: JAVA_HOME is not set."
-  exit 1
+    echo "Error: JAVA_HOME is not set."
+    exit 1
+fi
+
+if ! command -v perf >/dev/null 2>&1; then
+    echo "perf is not installed."
+    exit 1
 fi
 
 PERFJ_JAR=$(find "${PERFJ_HOME}" -name "perfj-*.jar")
 
 if [ -n "${PERFJ_JAR}" ]; then
     if [ "${JAVA_HOME}" != "" ]; then
-       TOOLS_JAR="${JAVA_HOME}/lib/tools.jar"
-       ${JAVA_HOME}/bin/java -cp ${PERFJ_JAR}:${TOOLS_JAR} info.minzhou.perfj.PerfJ $*
+        TOOLS_JAR="${JAVA_HOME}/lib/tools.jar"
+        ${JAVA_HOME}/bin/java -cp ${PERFJ_JAR}:${TOOLS_JAR} info.minzhou.perfj.PerfJ ${PID}
     else
-       echo "Please set JAVA_HOME before running this script"
-       exit 1
+        echo "Please set JAVA_HOME before running this script"
+        exit 1
     fi
 else
     echo "Please set PERFJ_HOME before running this script"
     exit 1
 fi
+
+sudo perf ${ARGS}

@@ -17,6 +17,8 @@ afterwards run
 
 `PerfJ` is only work on jdk version with frame pointer enabled.
 
+    bin/perfj record -F 99 -g -p $pid
+
 ## License
 
 This library is licensed under GPLv2. See the LICENSE file.

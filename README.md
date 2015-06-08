@@ -1,9 +1,14 @@
+# Perfj
 
+This project is based on Johannes Rudolph's work at https://github.com/jrudolph
 
 ## Build
 
-    ./gradlew releaseTarGz
+    gradle releaseTarGz
 
+## Usage
+
+`PerfJ` is only work on jdk version with frame pointer enabled.
 
 ## License
 

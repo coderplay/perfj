@@ -38,6 +38,8 @@ if [ $# = 0 ]; then
     exit 1
 fi
 
+COMMAND=$1
+
 if [ -z "$PERFJ_HOME" -o ! -d "$PERFJ_HOME" ] ; then
     # resolve links - $0 could be a link to btrace's home
     PRG="$0"
@@ -72,39 +74,43 @@ while true; do
 done
 
 
-if [ -z "${PID}" ]; then
-    echo "-p pid is required "
-    exit 1
-fi
+if [ "$COMMAND" = "record" ] || [ "$COMMAND" = "trace" ] || [ "$COMMAND" = "top" ] || [ "$COMMAND" = "script" ] ; then
 
-# some Java parameters
-if [ "$JAVA_HOME" != "" ]; then
-    #echo "run java in $JAVA_HOME"
-    JAVA_HOME=$JAVA_HOME
-fi
-
-if [ "$JAVA_HOME" = "" ]; then
-    echo "Error: JAVA_HOME is not set."
-    exit 1
-fi
-
-if ! command -v perf >/dev/null 2>&1; then
-    echo "perf is not installed."
-    exit 1
-fi
-
-PERFJ_JAR=$(find "${PERFJ_HOME}" -name "perfj-*.jar")
-
-if [ -n "${PERFJ_JAR}" ]; then
-    if [ "${JAVA_HOME}" != "" ]; then
-        TOOLS_JAR="${JAVA_HOME}/lib/tools.jar"
-        ${JAVA_HOME}/bin/java -cp ${PERFJ_JAR}:${TOOLS_JAR} info.minzhou.perfj.PerfJ ${PID}
-    else
-        echo "Please set JAVA_HOME before running this script"
+    if [ -z "${PID}" ]; then
+        echo "-p pid is required by command $COMMAND"
         exit 1
     fi
-else
-    echo "Please set PERFJ_HOME before running this script"
+
+    # some Java parameters
+    if [ "$JAVA_HOME" != "" ]; then
+        #echo "run java in $JAVA_HOME"
+        JAVA_HOME=$JAVA_HOME
+    fi
+
+    if [ "$JAVA_HOME" = "" ]; then
+        echo "Error: JAVA_HOME is not set."
+        exit 1
+    fi
+
+    PERFJ_JAR=$(find "${PERFJ_HOME}" -name "perfj-*.jar")
+
+    if [ -n "${PERFJ_JAR}" ]; then
+        if [ "${JAVA_HOME}" != "" ]; then
+            TOOLS_JAR="${JAVA_HOME}/lib/tools.jar"
+            ${JAVA_HOME}/bin/java -cp ${PERFJ_JAR}:${TOOLS_JAR} info.minzhou.perfj.PerfJ ${PID}
+        else
+            echo "Please set JAVA_HOME before running this script"
+            exit 1
+        fi
+    else
+        echo "Please set PERFJ_HOME before running this script"
+        exit 1
+    fi
+fi
+
+# Make sure perf is installed
+if ! command -v perf >/dev/null 2>&1; then
+    echo "perf is not installed."
     exit 1
 fi
 

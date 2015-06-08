@@ -93,7 +93,7 @@ public class PerfJ {
     }
 
     // Load native library inside a jar file
-    perfjNativeLibraryPath = "/info/minzhou/perfj";
+    perfjNativeLibraryPath = "/info/minzhou/perfj/native";
     boolean hasNativeLib = hasResource(perfjNativeLibraryPath + "/" + perfjNativeLibraryName);
 
     if (!hasNativeLib) {

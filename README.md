@@ -21,6 +21,12 @@ Thanks to [Brendan Gregg's patch](https://bugs.openjdk.java.net/browse/JDK-80689
 
 This project is based on Johannes Rudolph's work at [here](https://github.com/jrudolph/perf-map-agent). I just make it more convenient to use.
 
+## Prerequisites
+
+* Linux x86_64
+* perf
+* JDK 8u60+ / JDK9 ( haven't been release yet)
+
 ## Build
 
     gradle releaseTarGz

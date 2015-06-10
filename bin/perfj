@@ -97,6 +97,8 @@ if [ "$COMMAND" = "kvm" -o "$COMMAND" = "record" -o "$COMMAND" = "trace" -o "$CO
     if [ -n "${PERFJ_JAR}" ]; then
         if [ "${JAVA_HOME}" != "" ]; then
             TOOLS_JAR="${JAVA_HOME}/lib/tools.jar"
+            # Remove map file if exists
+            sudo rm -f /tmp/perf-${PID}.map
             ${JAVA_HOME}/bin/java -cp ${PERFJ_JAR}:${TOOLS_JAR} info.minzhou.perfj.PerfJ ${PID}
             sudo chown root:root /tmp/perf-${PID}.map
         else

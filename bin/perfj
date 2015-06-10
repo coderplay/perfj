@@ -74,7 +74,7 @@ while true; do
 done
 
 
-if [ "$COMMAND" = "kvm" ] || [ "$COMMAND" = "record" ] || [ "$COMMAND" = "trace" ] || [ "$COMMAND" = "top" ] || [ "$COMMAND" = "script" ] || [ "$COMMAND" = "probe" ] ; then
+if [ "$COMMAND" = "kvm" -o "$COMMAND" = "record" -o "$COMMAND" = "trace" -o "$COMMAND" = "top" -o "$COMMAND" = "script" -o "$COMMAND" = "probe" ] ; then
 
     if [ -z "${PID}" ]; then
         echo "-p pid is required by command $COMMAND"

@@ -31,17 +31,17 @@ This project is based on Johannes Rudolph's work at [here](https://github.com/jr
 
 checkout the source from github
 
-    git clone https://github.com/coderplay/perfj.git
+    > git clone https://github.com/coderplay/perfj.git
 
 * if gradle is already installed, just run
 
-    gradle releaseTarGz
+    > gradle releaseTarGz
 * or just run once
 
-    gradle createWrapper
+    > gradle createWrapper
   and run below in the future building
 
-    ./gradlew releaseTarGz
+    > ./gradlew releaseTarGz
 
 ## Usage
 

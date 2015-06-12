@@ -29,6 +29,9 @@ This project is based on Johannes Rudolph's work at [here](https://github.com/jr
 
 ## Build
 
+checkout the source from github
+    git clone https://github.com/coderplay/perfj.git
+
     gradle releaseTarGz
 or just run once
 

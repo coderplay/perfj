@@ -1,5 +1,7 @@
 # PerfJ
 
+[![Join the chat at https://gitter.im/coderplay/perfj](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/coderplay/perfj?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 `PerfJ` is a wrapper of linux `perf` for java programs.
 
 In order to profile java programs, you need a profiler that can sample stack traces. There has historically been two types of profilers:

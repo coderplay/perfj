@@ -25,7 +25,7 @@ This project is based on Johannes Rudolph's work at [here](https://github.com/jr
 
 * Linux x86_64
 * perf
-* JDK 8u60+ / JDK9 ( haven't been release yet)
+* JDK 8u60+ / JDK9 ( haven't been released yet, however, there is an [Early Access Release](https://jdk8.java.net/download.html))
 
 ## Build
 

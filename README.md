@@ -31,6 +31,9 @@ This project is based on Johannes Rudolph's work at [here](https://github.com/jr
 
 ## Build
 
+Before starting building `PerfJ`, make sure `gcc` is already installed.
+
+
 checkout the source from github
 
     git clone https://github.com/coderplay/perfj.git

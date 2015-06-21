@@ -35,13 +35,6 @@ checkout the source from github
 
     git clone https://github.com/coderplay/perfj.git
 
-if gradle is already installed, just run
-
-    gradle releaseTarGz
-
-or just run once
-
-    gradle createWrapper
 and run below in the future building
 
     ./gradlew releaseTarGz

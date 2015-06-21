@@ -40,6 +40,7 @@ checkout the source from github
 
 and run below in the future building
 
+    cd perfj
     ./gradlew releaseTarGz
 
 ## Usage

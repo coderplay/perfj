@@ -9,7 +9,7 @@ In order to profile java programs, you need a profiler that can sample stack tra
 * `System profilers:` like Linux perf, which shows system code paths (eg, JVM GC, syscalls, TCP), but not Java methods.
 * `JVM profilers:` like hprof, LJP, and commercial profilers. These show Java methods, but usually not system code paths.
 
-Ideally, we have profile result that does it all: system and Java code paths. Apart from convenience, it also shows system code-paths in Java context, which can be crucial for understanding a profile properly.
+Ideally, we need a profile result that does it all: system and Java code paths. Apart from convenience, it also shows system code-paths in Java context, which can be crucial for understanding a profile properly.
 
 The problem is getting a system profiler to understand Java methods and stack traces. If you try Linux perf_events, for example, you'll see hexadecimal numbers and broken stack traces, as it can't convert addresses into Java symbols, and can't walk the JVM stack.
 

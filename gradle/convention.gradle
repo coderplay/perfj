@@ -2,6 +2,8 @@ apply plugin: 'java' // Plugin as major conventions, overwrites status
 
 sourceCompatibility = 1.7
 
+compileJava.options.bootClasspath="${org.gradle.internal.jvm.Jvm.current().javaHome}/jre/lib/rt.jar"
+
 // GRADLE-2087 workaround, perform after java plugin
 status = project.hasProperty('preferredStatus')?project.preferredStatus:(version.contains('SNAPSHOT')?'snapshot':'release')
 
@@ -55,6 +57,7 @@ project.sourceSets {
   main.runtimeClasspath -= project.configurations.provided
   test.compileClasspath += project.configurations.provided
   test.runtimeClasspath += project.configurations.provided
+  javadoc.classpath     += project.configurations.provided
 }
 
 apply plugin: 'org.ajoberstar.github-pages' // Used to create publishGhPages task
@@ -86,8 +89,8 @@ task createWrapper(type: Wrapper) {
 
 
 task releaseTarGz(dependsOn: assemble, type: Tar) {
-  baseName "${rootProject.name}-${rootProject.version}"
-  into "${baseName}"
+  baseName "${rootProject.name}"
+  into "${baseName}-${rootProject.version}"
   compression = Compression.GZIP
   from(project.file("bin")) { into "bin/" }
   from(project.file("conf")) { into "conf/" }

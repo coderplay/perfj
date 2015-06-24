@@ -114,11 +114,11 @@ void generate_unfolded_entries(
     while (current != NULL) {
         if (current->kind == JVMTI_CMLR_INLINE_INFO) {
             hasInlineInfo = 1;
-            const char *entry_p;
             const jvmtiCompiledMethodLoadInlineRecord *record = (jvmtiCompiledMethodLoadInlineRecord *) current;
 
             const void *start_addr = code_addr;
             jmethodID cur_method = method;
+            const char *entry_p = (record->numpcs == 0) ? root_name : NULL;
             for (i = 0; i < record->numpcs; i++) {
                 PCStackInfo *info = &record->pcinfo[i];
                 jmethodID top_method = info->methods[0];

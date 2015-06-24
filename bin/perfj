@@ -99,7 +99,7 @@ if [ "$COMMAND" = "kvm" -o "$COMMAND" = "record" -o "$COMMAND" = "trace" -o "$CO
             TOOLS_JAR="${JAVA_HOME}/lib/tools.jar"
             # Remove map file if exists
             sudo rm -f /tmp/perf-${PID}.map
-            ${JAVA_HOME}/bin/java -cp ${PERFJ_JAR}:${TOOLS_JAR} info.minzhou.perfj.PerfJ ${PID}
+            ${JAVA_HOME}/bin/java -cp ${PERFJ_JAR}:${TOOLS_JAR} info.minzhou.perfj.PerfJ ${PID} "unfold"
             sudo chown root:root /tmp/perf-${PID}.map
         else
             echo "Please set JAVA_HOME before running this script"

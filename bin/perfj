@@ -74,6 +74,14 @@ while true; do
 done
 
 
+# Make sure perf is installed
+if ! command -v perf >/dev/null 2>&1; then
+    echo "perf is not installed."
+    exit 1
+fi
+
+sudo perf ${ARGS}
+
 if [ "$COMMAND" = "kvm" -o "$COMMAND" = "record" -o "$COMMAND" = "trace" -o "$COMMAND" = "top" -o "$COMMAND" = "script" -o "$COMMAND" = "probe" ] ; then
 
     if [ -z "${PID}" ]; then
@@ -110,11 +118,3 @@ if [ "$COMMAND" = "kvm" -o "$COMMAND" = "record" -o "$COMMAND" = "trace" -o "$CO
         exit 1
     fi
 fi
-
-# Make sure perf is installed
-if ! command -v perf >/dev/null 2>&1; then
-    echo "perf is not installed."
-    exit 1
-fi
-
-sudo perf ${ARGS}

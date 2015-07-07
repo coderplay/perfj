@@ -41,8 +41,10 @@ int perf_map_close(FILE *fp) {
         return 0;
 }
 
-void perf_map_write_entry(FILE *method_file, const void* code_addr, unsigned int code_size, const char* entry) {
-  if (method_file) {
-    fprintf(method_file, "%lx %x %s\n", (unsigned long) code_addr, code_size, entry);
-  }
+void perf_map_write_entry(FILE *method_file, const void* code_addr,
+        unsigned int code_size, const char* entry) {
+    if (method_file) {
+        fprintf(method_file, "%lx %x %s\n", (unsigned long) code_addr,
+                code_size, entry);
+    }
 }

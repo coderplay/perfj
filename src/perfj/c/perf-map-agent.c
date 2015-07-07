@@ -44,11 +44,12 @@ void close_map_file() {
 }
 
 static int get_line_number(jvmtiLineNumberEntry *table, jint entry_count, jlocation loc) {
-  int i;
-  for (i = 0; i < entry_count; i++)
-    if (table[i].start_location > loc) return table[i - 1].line_number;
+    int i;
+    for (i = 0; i < entry_count; i++)
+        if (table[i].start_location > loc)
+            return table[i - 1].line_number;
 
-  return -1;
+    return -1;
 }
 
 void class_name_from_sig(char *dest, size_t dest_size, const char *sig) {
@@ -113,45 +114,50 @@ void generate_unfolded_entries(
     sig_string(jvmti, method, root_name, sizeof(root_name));
     while (current != NULL) {
         if (current->kind == JVMTI_CMLR_INLINE_INFO) {
-          hasInlineInfo = true;
-          const jvmtiCompiledMethodLoadInlineRecord *record = (jvmtiCompiledMethodLoadInlineRecord *) current;
-          const void *start_addr = code_addr;
-          jmethodID cur_method = method;
-          const char *cur_entry = root_name;
-          for (i = 0; i < record->numpcs; i++) {
-            PCStackInfo *info = &record->pcinfo[i];
-            jmethodID top_method = info->methods[0];
-            if (cur_method != top_method) {
-              void *end_addr = info->pc;
+            hasInlineInfo = true;
+            const jvmtiCompiledMethodLoadInlineRecord *record =
+                    (jvmtiCompiledMethodLoadInlineRecord *) current;
+            const void *start_addr = code_addr;
+            jmethodID cur_method = method;
+            const char *cur_entry = root_name;
+            for (i = 0; i < record->numpcs; i++) {
+                PCStackInfo *info = &record->pcinfo[i];
+                jmethodID top_method = info->methods[0];
+                if (cur_method != top_method) {
+                    void *end_addr = info->pc;
 
-              if (top_method != method) {
-                sig_string(jvmti, top_method, entry_name, sizeof(entry_name));
-                snprintf(entry, sizeof(entry), "%s in %s", entry_name, root_name);
-                cur_entry = entry;
-              } else
-                cur_entry = root_name;
+                    if (top_method != method) {
+                        sig_string(jvmti, top_method, entry_name,
+                                sizeof(entry_name));
+                        snprintf(entry, sizeof(entry), "%s in %s", entry_name,
+                                root_name);
+                        cur_entry = entry;
+                    } else
+                        cur_entry = root_name;
 
-              perf_map_write_entry(method_file, start_addr, end_addr - start_addr, cur_entry);
+                    perf_map_write_entry(method_file, start_addr,
+                            end_addr - start_addr, cur_entry);
 
-              start_addr = info->pc;
-              cur_method = top_method;
+                    start_addr = info->pc;
+                    cur_method = top_method;
+                }
             }
-          }
 
+            if (start_addr < code_addr + code_size) {
+                const void *end_addr = code_addr + code_size;
+                sig_string(jvmti, cur_method, entry_name, sizeof(entry_name));
+                snprintf(entry, sizeof(entry), "%s in %s", entry_name,
+                        root_name);
 
-          if (start_addr < code_addr +  code_size) {
-            const void *end_addr = code_addr + code_size;
-            sig_string(jvmti, cur_method, entry_name, sizeof(entry_name));
-            snprintf(entry, sizeof(entry), "%s in %s", entry_name, root_name);
-
-            perf_map_write_entry(method_file, start_addr, end_addr - start_addr, cur_entry);
-          }
+                perf_map_write_entry(method_file, start_addr,
+                        end_addr - start_addr, cur_entry);
+            }
 
         }
         current = (jvmtiCompiledMethodLoadRecordHeader *) current->next;
     }
 
-    if(!hasInlineInfo) {
+    if (!hasInlineInfo) {
         generate_single_entry(jvmti, method, code_addr, code_size);
     }
 }

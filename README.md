@@ -29,7 +29,7 @@ Below is an example shows the hotspot of a pure java [leveldb](https://github.co
 
 ![PerfJ CPU Flame Graph Example](images/perfj.png)
 
-The raw Interactive SVG images is [here] (http://blog.minzhou.info/perfj/perfj.svg).
+There is a raw interactive SVG image [here] (http://blog.minzhou.info/perfj/perfj.svg).
 
 
 ## Prerequisites

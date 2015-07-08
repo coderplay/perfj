@@ -23,6 +23,15 @@ Thanks to [Brendan Gregg's patch](https://bugs.openjdk.java.net/browse/JDK-80689
 
 This project is based on Johannes Rudolph's work at [here](https://github.com/jrudolph/perf-map-agent). I just make it more convenient to use.
 
+`PerfJ` can produce flame graph through [Brendan Gregg's FlameGraph tool](https://github.com/brendangregg/FlameGraph) as well.
+
+Below is an example shows the hotspot of a pure java [leveldb](https://github.com/dain/leveldb) program. Green is Java layer, yellow is JVM layer, and red is system layer(native user-level, or kernel). Longer bar means higher cpu percentage.
+
+![PerfJ CPU Flame Graph Example](images/perfj.png)
+
+The raw Interactive SVG images is [here] (http://blog.minzhou.info/perfj/perfj.svg).
+
+
 ## Prerequisites
 
 * Linux x86_64
@@ -60,16 +69,6 @@ then download `perfj-*.tgz` from the [release page] (https://github.com/coderpla
 
     tar zxvf perf-*.tgz
 
-
-## CPU Flame Graph
-
-`PerfJ` can produce flame graph through [Brendan Gregg's FlameGraph tool](https://github.com/brendangregg/FlameGraph)
-
-Below is an example shows the hotspot of an pure java leveldb program. Green is Java layer, yellow is C++ code, and red is system (native user-level, or kernel). Longer bar means higher cpu percentage.
-
-![PerfJ CPU Flame Graph Example](images/perfj.png)
-
-The raw Interactive SVG images is [here] (http://blog.minzhou.info/perfj/perfj.svg).
 
 ## Usage
 

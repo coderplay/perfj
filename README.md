@@ -21,9 +21,9 @@ There are two specific problems:
 
 Thanks to [Brendan Gregg's patch](https://bugs.openjdk.java.net/browse/JDK-8068945). We will have an option to turn on the preservation of frame pointer on JDK 8u60+.
 
-This project is based on Johannes Rudolph's work at [here](https://github.com/jrudolph/perf-map-agent). I just make it more convenient to use.
+This project is based on Johannes Rudolph's work at [here](https://github.com/jrudolph/perf-map-agent), but `PerfJ` is more convenient and safer to use.
 
-`PerfJ` can produce flame graph through [Brendan Gregg's FlameGraph tool](https://github.com/brendangregg/FlameGraph) as well.
+`PerfJ` can produce flame graph through [Brendan Gregg's FlameGraph tool](https://github.com/brendangregg/FlameGraph) .
 
 Below is an example shows the hotspot of a pure java [leveldb](https://github.com/dain/leveldb) program. Green is Java layer, yellow is JVM layer, and red is system layer(native user-level, or kernel). Longer bar means higher cpu percentage.
 
@@ -61,7 +61,7 @@ To install perf on centos/redhat/fedora linux system
 
     yum install perf.x86_64
 
-To install perf on for ubuntu linux system
+To install perf on ubuntu linux system
 
     apt-get install linux-tools-common linux-tools-generic linux-tools-`uname -r`
 

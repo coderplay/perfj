@@ -43,6 +43,23 @@ and run below in the future building
     cd perfj
     ./gradlew releaseTarGz
 
+
+## Installation
+
+Before install `PerfJ`, you should install Linux perf first
+
+To install perf on centos/redhat/fedora linux system
+
+    yum install perf.x86_64
+
+To install perf on for ubuntu linux system
+
+    apt-get install linux-tools-common linux-tools-generic linux-tools-`uname -r`
+
+then download `perfj-*.tgz` from the [release page] (https://github.com/coderplay/perfj/releases),  untar it
+
+    tar zxvf perf-*.tgz
+
 ## Usage
 
 `PerfJ` is only work on new versions of JDK with frame pointer preserved. Here is an example shows how to enable this feature
@@ -119,6 +136,16 @@ Below is an example result
 
 ```
 Now that you can see the Java/JVM methods rather than hexadecimal addresses.
+
+## CPU Flame Graph
+
+`PerfJ` can produce flame graph through [Brendan Gregg's FlameGraph tool](https://github.com/brendangregg/FlameGraph)
+
+Below is an example shows the hotspot of an pure java leveldb program. Green is Java layer, yellow is C++ code, and red is system (native user-level, or kernel). Longer bar means higher cpu percentage.
+
+![PerfJ CPU Flame Graph Example](images/perfj.png)
+
+The raw Interactive SVG images is [here] (images/perfj.svg).
 
 ## License
 

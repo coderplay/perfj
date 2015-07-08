@@ -145,7 +145,7 @@ Below is an example shows the hotspot of an pure java leveldb program. Green is 
 
 ![PerfJ CPU Flame Graph Example](images/perfj.png)
 
-The raw Interactive SVG images is [here] (images/perfj.svg).
+The raw Interactive SVG images is [here] (http://blog.minzhou.info/perfj/perfj.svg).
 
 ## License
 

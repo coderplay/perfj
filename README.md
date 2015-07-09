@@ -4,22 +4,23 @@
 
 `PerfJ` is a wrapper of linux `perf` for java programs.
 
-In order to profile java programs, you need a profiler that can sample stack traces. There has historically been two types of profilers:
+As [Brendan Gregg's words](http://www.brendangregg.com/FlameGraphs/cpuflamegraphs.html#Java)
 
-* `System profilers:` like Linux perf, which shows system code paths (eg, JVM GC, syscalls, TCP), but not Java methods.
-* `JVM profilers:` like hprof, LJP, and commercial profilers. These show Java methods, but usually not system code paths.
+>In order to profile java programs, you need a profiler that can sample stack traces. There has historically been two types of profilers:
 
-Ideally, we need a profile result that does it all: system and Java code paths. Apart from convenience, it also shows system code-paths in Java context, which can be crucial for understanding a profile properly.
+>* `System profilers:` like Linux perf, which shows system code paths (eg, JVM GC, syscalls, TCP), but not Java methods.
+>* `JVM profilers:` like hprof, LJP, and commercial profilers. These show Java methods, but usually not system code paths.
 
-The problem is getting a system profiler to understand Java methods and stack traces. If you try Linux perf_events, for example, you'll see hexadecimal numbers and broken stack traces, as it can't convert addresses into Java symbols, and can't walk the JVM stack.
+>Ideally, we need a profile result that does it all: system and Java code paths. Apart from convenience, it also shows system code-paths in Java context, which can be crucial for understanding a profile properly.
 
-There are two specific problems:
+>The problem is getting a system profiler to understand Java methods and stack traces. If you try Linux perf_events, for example, you'll see hexadecimal numbers and broken stack traces, as it can't convert addresses into Java symbols, and can't walk the JVM stack.
 
-* The JVM compiles methods on the fly (just-in-time: JIT), and doesn't expose a traditional symbol table for system profilers to read.
-* The JVM also uses the frame pointer register (RBP on x86-64) as a general purpose register, breaking traditional stack walking.
+>There are two specific problems:
 
+>* The JVM compiles methods on the fly (just-in-time: JIT), and doesn't expose a traditional symbol table for system profilers to read.
+>* The JVM also uses the frame pointer register (RBP on x86-64) as a general purpose register, breaking traditional stack walking.
 
-Thanks to [Brendan Gregg's patch](https://bugs.openjdk.java.net/browse/JDK-8068945). We will have an option to turn on the preservation of frame pointer on JDK 8u60+.
+Thanks to [the work by Brendan Gregg and Zoltan Majo](https://bugs.openjdk.java.net/browse/JDK-8068945). We will have an option to turn on the preservation of frame pointer on JDK 8u60+.
 
 This project is based on Johannes Rudolph's work at [here](https://github.com/jrudolph/perf-map-agent), but `PerfJ` is more convenient and safer to use.
 

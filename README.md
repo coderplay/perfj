@@ -37,7 +37,7 @@ There is a raw interactive SVG image [here] (http://blog.minzhou.info/perfj/perf
 
 * Linux x86_64
 * perf
-* JDK 8u60+ / JDK9 ( haven't been released yet, however, there is an [Early Access Release](https://jdk8.java.net/download.html))
+* JDK 8u60 and higher
 
 ## Build
 

@@ -94,12 +94,18 @@ if [ "$COMMAND" = "kvm" -o "$COMMAND" = "record" -o "$COMMAND" = "trace" -o "$CO
 
     PERFJ_JAR=$(find "${PERFJ_HOME}" -maxdepth 1 -name "perfj-*.jar")
 
+    if [ -n "${JAVA_USER}" ]; then
+        JAVA_USER="-u ${JAVA_USER}"
+    else 
+        JAVA_USER=""
+    fi
+
     if [ -n "${PERFJ_JAR}" ]; then
         if [ "${JAVA_HOME}" != "" ]; then
             TOOLS_JAR="${JAVA_HOME}/lib/tools.jar"
             # Remove map file if exists
             sudo rm -f /tmp/perf-${PID}.map
-            ${JAVA_HOME}/bin/java -cp ${PERFJ_JAR}:${TOOLS_JAR} info.minzhou.perfj.PerfJ ${PID} "unfold"
+            sudo ${JAVA_USER} ${JAVA_HOME}/bin/java -cp ${PERFJ_JAR}:${TOOLS_JAR} info.minzhou.perfj.PerfJ ${PID} "unfold"
             sudo chown root:root /tmp/perf-${PID}.map
         else
             echo "Please set JAVA_HOME before running this script"

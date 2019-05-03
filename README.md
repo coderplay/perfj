@@ -30,7 +30,7 @@ Below is an example shows the hotspot of a pure java [leveldb](https://github.co
 
 ![PerfJ CPU Flame Graph Example](images/perfj.png)
 
-There is a raw interactive SVG image [here] (http://blog.minzhou.info/perfj/perfj.svg).
+There is a raw interactive SVG image [here](http://blog.minzhou.info/perfj/perfj.svg).
 
 
 ## Prerequisites
@@ -66,14 +66,14 @@ To install perf on ubuntu linux system
 
     apt-get install linux-tools-common linux-tools-generic linux-tools-`uname -r`
 
-then download `perfj-*.tgz` from the [release page] (https://github.com/coderplay/perfj/releases),  untar it
+then download `perfj-*.tgz` from the [release page](https://github.com/coderplay/perfj/releases),  untar it
 
     tar zxvf perf-*.tgz
 
 
 ## Usage
 
-Check the [wiki pages] (https://github.com/coderplay/perfj/wiki)
+Check the [wiki pages](https://github.com/coderplay/perfj/wiki)
 
 ## License
 
